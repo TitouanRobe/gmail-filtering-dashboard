@@ -1,5 +1,5 @@
 {
-  "name": "frontend",
+  "name": "gmail-filtering",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -12,9 +12,11 @@
   "dependencies": {
     "@cloudscape-design/collection-hooks": "^1.0.95",
     "@cloudscape-design/components": "^3.0.1295",
+    "@cloudscape-design/design-tokens": "^3.0.110",
     "@cloudscape-design/global-styles": "^1.0.59",
     "react": "^19.2.6",
-    "react-dom": "^19.2.6"
+    "react-dom": "^19.2.6",
+    "react-router-dom": "^7.18.3"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

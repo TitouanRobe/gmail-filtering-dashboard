@@ -1,35 +1,101 @@
-const API_BASE = "http://localhost:8000/api";
+const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:8000/api";
 
-export async function fetchStats() {
-  const res = await fetch(`${API_BASE}/stats`);
-  if (!res.ok) throw new Error("Erreur lors du chargement des stats");
+/**
+ * Error raised by every failed API call.
+ *
+ * The backend answers FastAPI errors as {detail: {code, message, params}}:
+ * `code` is a stable identifier the UI can translate, `message` is the English
+ * text used as-is when the code is unknown to the catalog (older backend,
+ * unexpected failure...).
+ */
+export class ApiError extends Error {
+  constructor(message, code = null, params = null) {
+    super(message);
+    this.name = "ApiError";
+    this.code = code;
+    this.params = params;
+  }
+}
+
+async function request(path, options) {
+  const res = await fetch(`${API_BASE}${path}`, options);
+  if (!res.ok) {
+    let code = "http";
+    let params = { status: res.status };
+    let message = `Error ${res.status}`;
+    try {
+      const body = await res.json();
+      const detail = body?.detail;
+      if (typeof detail === "string") {
+        code = null;
+        message = detail;
+      } else if (detail) {
+        code = detail.code ?? null;
+        params = detail.params ?? null;
+        message = detail.message ?? message;
+      }
+    } catch {
+      /* non-JSON response: keep the default message */
+    }
+    throw new ApiError(message, code, params);
+  }
   return res.json();
 }
 
-export async function fetchSenders(limit = 948) {
-  const res = await fetch(`${API_BASE}/senders?limit=${limit}`);
-  if (!res.ok) throw new Error("Erreur lors du chargement des expéditeurs");
-  return res.json();
+const jsonPost = (body) => ({
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify(body),
+});
+
+export function fetchMe() {
+  return request("/me");
 }
 
-export async function fetchSenderEmails(email) {
-  const res = await fetch(`${API_BASE}/senders/${encodeURIComponent(email)}/emails`);
-  if (!res.ok) throw new Error(`Erreur lors du chargement des mails de ${email}`);
-  return res.json();
+export function fetchStats() {
+  return request("/stats");
 }
 
-export async function trashEmails(ids) {
-  const res = await fetch(`${API_BASE}/emails/trash`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ ids }),
-  });
-  if (!res.ok) throw new Error("Erreur lors de la suppression");
-  return res.json();
+export function fetchSenders(limit = 5000) {
+  return request(`/senders?limit=${limit}`);
 }
 
-export async function reloadCsv() {
-  const res = await fetch(`${API_BASE}/reload`);
-  if (!res.ok) throw new Error("Erreur lors du rechargement du CSV");
-  return res.json();
+export function fetchSenderEmails(email) {
+  return request(`/senders/${encodeURIComponent(email)}/emails`);
+}
+
+export function fetchEmailDetail(id) {
+  return request(`/emails/${encodeURIComponent(id)}`);
+}
+
+export function trashEmails(ids) {
+  return request("/emails/trash", jsonPost({ ids }));
+}
+
+export function trashSenders(emails) {
+  return request("/senders/trash", jsonPost({ emails }));
+}
+
+export function reloadCsv() {
+  return request("/reload");
+}
+
+export function startSync() {
+  return request("/sync/start", { method: "POST" });
+}
+
+export function fetchSyncStatus() {
+  return request("/sync/status");
+}
+
+export function fetchUnsubscribeSenders() {
+  return request("/unsubscribe/senders");
+}
+
+export function scanUnsubscribe(emails = null, force = false) {
+  return request("/unsubscribe/scan", jsonPost({ emails, force }));
+}
+
+export function runUnsubscribe(emails) {
+  return request("/unsubscribe/run", jsonPost({ emails }));
 }

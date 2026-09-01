@@ -222,6 +222,8 @@ __marimo__/
 secrets.json
 token.json
 emails.csv
+sync_status.json
+unsubscribe_cache.json
 logs/
 venv/
 .venv/
@@ -229,3 +231,7 @@ __pycache__/
 frontend/node_modules
 .idea/
 .DS_Store
+unsubscribe_cache.json
+
+# local dev notes, not part of the shipped project
+CLAUDE.md

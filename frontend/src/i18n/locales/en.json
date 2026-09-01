@@ -1,0 +1,325 @@
+{
+  "language": {
+    "label": "Language"
+  },
+  "common": {
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "close": "Close",
+    "empty": "—",
+    "noResults": "No results",
+    "affectedSenders": "Affected senders",
+    "andNMore": "…and {count} more",
+    "emailCount": {
+      "one": "{count} email",
+      "other": "{count} emails"
+    },
+    "senderCount": {
+      "one": "{count} sender",
+      "other": "{count} senders"
+    },
+    "errorCount": {
+      "one": "{count} error",
+      "other": "{count} errors"
+    },
+    "resultCount": {
+      "one": "{count} result",
+      "other": "{count} results"
+    },
+    "deletedEmailCount": {
+      "one": "{count} email deleted",
+      "other": "{count} emails deleted"
+    }
+  },
+  "table": {
+    "selectAll": "Select all",
+    "nextPage": "Next page",
+    "previousPage": "Previous page",
+    "pageLabel": "Page {page}",
+    "preferences": "Table preferences",
+    "wrapLines": "Wrap lines",
+    "wrapLinesDescriptionText": "Display long text over several lines.",
+    "wrapLinesDescriptionSubject": "Display long subjects in full.",
+    "stripedRows": "Striped rows",
+    "stripedRowsDescription": "Alternate the background color of the rows.",
+    "columns": "Columns",
+    "rowsPerPage": "{count} rows",
+    "sendersPerPage": "Senders per page",
+    "emailsPerPage": "Emails per page"
+  },
+  "nav": {
+    "header": "Navigation",
+    "dashboard": "Dashboard",
+    "senders": "Senders",
+    "unsubscribe": "Unsubscribe"
+  },
+  "topNav": {
+    "title": "Gmail Filtering",
+    "sync": "Sync",
+    "syncing": "Syncing…",
+    "syncAriaLabel": "Resync emails from Gmail",
+    "lightMode": "Light mode",
+    "darkMode": "Dark mode",
+    "switchToLight": "Switch to light mode",
+    "switchToDark": "Switch to dark mode"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "descriptionWithAccount": "Analysis of the emails received on {account}",
+    "description": "Analysis of the emails received",
+    "viewAllSenders": "View all senders",
+    "totalEmails": "Emails received",
+    "totalEmailsHint": "Emails you received (your own are excluded)",
+    "uniqueSenders": "Unique senders",
+    "uniqueSendersHint": "Distinct addresses found in the mailbox",
+    "topSender": "Top sender",
+    "topSenderHint": "{email} — {emails} ({share} of the mailbox)",
+    "noData": "No data"
+  },
+  "chart": {
+    "title": "Top senders",
+    "description": "The senders that fill up your mailbox the most",
+    "topN": "Top {count}",
+    "senderCountLabel": "Number of senders displayed",
+    "series": "Emails received",
+    "xTitle": "Sender",
+    "yTitle": "Number of emails",
+    "ariaLabel": "Senders ranked by number of emails",
+    "viewEmails": "View emails",
+    "empty": "No data to display"
+  },
+  "senders": {
+    "title": "Senders",
+    "pageDescription": "Search, sort and bulk-clean your senders",
+    "tableDescription": "Select senders for a bulk cleanup, or click a name to open their emails.",
+    "columns": {
+      "rank": "#",
+      "name": "Name",
+      "email": "Email",
+      "count": "Emails",
+      "lastEmail": "Last email",
+      "share": "Share of mailbox"
+    },
+    "loading": "Loading senders...",
+    "selectionGroupLabel": "Sender selection",
+    "tableLabel": "Senders",
+    "searchPlaceholder": "Search a name or an address...",
+    "searchAriaLabel": "Search a sender",
+    "viewEmails": "View emails",
+    "deleteEmails": "Delete emails",
+    "deleteNEmails": "Delete {emails}",
+    "emptyTitle": "No sender",
+    "emptyDescription": "Run a sync to analyze your Gmail mailbox.",
+    "noMatchTitle": "No results",
+    "noMatchDescription": "Try another search term.",
+    "confirmDeleteTitle": "Delete the emails of the selected senders",
+    "confirmDeleteWarning": {
+      "one": "{count} email from {senders} will be moved to the Gmail trash. The action stays reversible from Gmail for 30 days.",
+      "other": "{count} emails from {senders} will be moved to the Gmail trash. The action stays reversible from Gmail for 30 days."
+    }
+  },
+  "unsubscribe": {
+    "title": "Unsubscribe",
+    "pageDescriptionEmpty": "Detects the List-Unsubscribe header of your senders and unsubscribes in one click when possible.",
+    "pageDescription": "{newsletters} out of {total} senders — {none} without an unsubscribe link, {unknown}.",
+    "newsletterCount": {
+      "one": "{count} unsubscribable newsletter detected",
+      "other": "{count} unsubscribable newsletters detected"
+    },
+    "unknownCount": {
+      "one": "{count} not scanned yet",
+      "other": "{count} not scanned yet"
+    },
+    "rescanAll": "Rescan everything",
+    "allScanned": "Everything is scanned",
+    "scanNew": "Scan {senders}",
+    "newSenderCount": {
+      "one": "{count} new sender",
+      "other": "{count} new senders"
+    },
+    "tableTitle": "Newsletters",
+    "tableDescription": "Click a name to see its emails. Automatic unsubscribe only covers “link” and “one-click” senders; the others can still be deleted in bulk.",
+    "tableLabel": "Unsubscribable newsletters",
+    "loading": "Loading senders...",
+    "loadFailed": "Loading failed",
+    "columns": {
+      "name": "Name",
+      "email": "Email",
+      "count": "Emails",
+      "lastEmail": "Last email",
+      "status": "Unsubscribe",
+      "lastRun": "Request",
+      "manualAction": "Manual action"
+    },
+    "status": {
+      "one_click": "One click",
+      "link": "Link to open",
+      "mailto": "Manual (email)",
+      "none": "None",
+      "unknown": "Not scanned"
+    },
+    "lastRunSent": "Sent {relative}",
+    "lastRunFailed": "Failed {relative}",
+    "openMail": "Open the email",
+    "openPage": "Open the page",
+    "emptyTitle": "No unsubscribable newsletter detected",
+    "emptyScanHint": "Run a scan to probe your senders.",
+    "emptyNoLinkHint": "None of your scanned senders exposes an unsubscribe link.",
+    "viewEmails": "View emails",
+    "deleteEmails": "Delete emails",
+    "deleteNEmails": "Delete {emails}",
+    "unsubscribeAction": "Unsubscribe",
+    "unsubscribeActionCount": "Unsubscribe ({count})",
+    "confirmRunTitle": "Confirm the unsubscribe",
+    "confirmRunAndDelete": "Unsubscribe and delete ({count})",
+    "confirmRunWarning": "An unsubscribe request will be sent directly to {senders}. For plain links (not “one-click”), some senders may require an extra confirmation on their own page — an HTTP OK response therefore does not guarantee that the request was processed on the other end.",
+    "manualSelectionNote": {
+      "one": "{count} selected sender only offers an email unsubscribe — use the “Open the email” link in the table, it is not included here.",
+      "other": "{count} selected senders only offer an email unsubscribe — use the “Open the email” link in the table, they are not included here."
+    },
+    "alsoDeleteAll": "Also delete all their emails",
+    "confirmDeleteTitle": "Confirm the deletion",
+    "confirmDeleteWarning": {
+      "one": "{count} email from {senders} will be moved to the Gmail trash — without any unsubscribe attempt. The action stays reversible from Gmail for 30 days.",
+      "other": "{count} emails from {senders} will be moved to the Gmail trash — without any unsubscribe attempt. The action stays reversible from Gmail for 30 days."
+    },
+    "searchPlaceholder": "Search a name or an address...",
+    "searchAriaLabel": "Search a sender"
+  },
+  "emailsPanel": {
+    "title": "Emails received",
+    "loading": "Loading emails...",
+    "tableLabel": "Emails from the sender",
+    "selectionGroupLabel": "Email selection",
+    "columns": {
+      "subject": "Subject",
+      "date": "Date"
+    },
+    "noSubject": "(no subject)",
+    "emptyList": "No email left from this sender.",
+    "noMatch": "No email matches this filter.",
+    "filterPlaceholder": "Filter by subject...",
+    "filterAriaLabel": "Filter emails",
+    "preferences": "Preferences",
+    "openUnsubscribeMail": "Open the unsubscribe email",
+    "unsubscribeAction": "Unsubscribe",
+    "deleteSelection": "Delete selection ({count})",
+    "deleteAll": "Delete all ({count})",
+    "confirmTrashTitle": "Confirm the move to trash",
+    "confirmTrashBody": {
+      "one": "{count} email from {sender} will be moved to the Gmail trash. The action stays reversible from Gmail for 30 days.",
+      "other": "{count} emails from {sender} will be moved to the Gmail trash. The action stays reversible from Gmail for 30 days."
+    },
+    "alsoUnsubscribe": "Also unsubscribe from this sender",
+    "confirmSelection": "Delete {emails}",
+    "confirmAll": "Delete all {emails}",
+    "confirmSingle": "Delete this email"
+  },
+  "preview": {
+    "title": "Email preview",
+    "subtitle": "Preview",
+    "noSelectionTitle": "No email selected",
+    "noSelectionDescription": "Click the subject of an email to display it here.",
+    "loading": "Loading the email...",
+    "errorHeader": "Cannot display this email",
+    "from": "From",
+    "to": "To",
+    "receivedAt": "Received on",
+    "labels": "Labels",
+    "remoteImagesBlocked": "Remote images are blocked (they let the sender track when the email is opened).",
+    "showImages": "Show images",
+    "copySubject": "Copy the subject",
+    "copyError": "Copy failed",
+    "copySuccess": "Subject copied",
+    "openInGmail": "Open in Gmail",
+    "delete": "Delete",
+    "emptyBody": "(Empty message)",
+    "iframeTitle": "Email content"
+  },
+  "toast": {
+    "backendUnreachable": "Cannot reach the backend",
+    "backendUnreachableContent": "{message} — check that the API is running on port 8000.",
+    "syncHeader": "Syncing with Gmail",
+    "syncStarting": "Starting the sync...",
+    "syncRunning": "Sync in progress...",
+    "syncDone": "Sync complete",
+    "syncFailed": "Sync failed",
+    "syncFailedFallback": "An error occurred during the sync.",
+    "deleting": "Deleting",
+    "deletingSenders": "Deleting the emails of {senders}...",
+    "deletingCount": "Deleting {emails} of {senders}...",
+    "deleteDone": "Deletion complete",
+    "deleteDoneSenders": {
+      "one": "{count} email from {senders} moved to the trash{errors}.",
+      "other": "{count} emails from {senders} moved to the trash{errors}."
+    },
+    "deleteFailed": "Deletion failed",
+    "deleteErrorsSuffix": " — {errors}",
+    "deleteAllHeader": "Deleting all emails",
+    "deleteSomeHeader": "Deleting {emails}",
+    "deleteSenderContent": "{sender}...",
+    "deleteSenderContentUnsub": "{sender} — unsubscribing then deleting...",
+    "deleteSenderDone": {
+      "one": "{count} email from {sender} moved to the trash{errors}.{unsubNote}",
+      "other": "{count} emails from {sender} moved to the trash{errors}.{unsubNote}"
+    },
+    "unsubscribing": "Unsubscribing",
+    "unsubscribeSent": "Unsubscribe request sent",
+    "unsubscribeFailedHeader": "Unsubscribe failed",
+    "unsubscribeFailedContent": "{sender}: {reason}.",
+    "unsubscribeError": "Unsubscribe failed",
+    "unknownReason": "unknown reason",
+    "unsubNoteOk": " Unsubscribe successful.",
+    "unsubNoteFailed": " Unsubscribe failed ({reason}).",
+    "unsubNoteError": " Unsubscribe impossible ({message}).",
+    "unsubRunning": "Sending {requests}{deleteNote}...",
+    "unsubRequestCount": {
+      "one": "{count} unsubscribe request",
+      "other": "{count} unsubscribe requests"
+    },
+    "unsubRunningDeleteNote": " then deleting the emails",
+    "unsubDone": "Unsubscribe complete",
+    "unsubSentCount": {
+      "one": "{count} unsubscribe request sent",
+      "other": "{count} unsubscribe requests sent"
+    },
+    "unsubFailCount": {
+      "one": "{count} failure",
+      "other": "{count} failures"
+    },
+    "unsubDoneContent": "{sent}{failures}.{deleteNote}",
+    "unsubDeleteNote": " {emails}.",
+    "unsubDeleteFailedNote": " Deleting the emails failed ({message}).",
+    "scanHeader": "Unsubscribe scan",
+    "scanRunning": "Probing {senders}...",
+    "scanDone": "Scan complete",
+    "scanDoneContent": {
+      "one": "{count} sender scanned.",
+      "other": "{count} senders scanned."
+    },
+    "scanFailed": "Scan failed",
+    "allScanned": "All senders are already scanned."
+  },
+  "apiError": {
+    "http": "Error {status}",
+    "token_missing": "token.json not found. Run main.py first.",
+    "token_invalid": "Invalid Gmail token. Run main.py again to re-authenticate.",
+    "sync_already_running": "A sync is already running.",
+    "email_not_found": "Email not found: {id}"
+  },
+  "syncStatus": {
+    "starting": "Starting the sync...",
+    "authenticating": "Authenticating with Gmail...",
+    "listing": "Fetching the message list...",
+    "found": "{total} messages found. Extracting metadata...",
+    "extracting": "Extracting metadata… {current}/{total}",
+    "done": "{saved} emails synced ({fetched} fetched / {total} total).",
+    "process_died": "The sync process stopped unexpectedly."
+  },
+  "unsubDetail": {
+    "not_scanned": "Not scanned yet",
+    "manual_action_required": "Requires a manual action",
+    "no_unsubscribe_link": "No unsubscribe link",
+    "http_status": "HTTP {status}"
+  }
+}

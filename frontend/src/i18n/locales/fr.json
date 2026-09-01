@@ -1,0 +1,325 @@
+{
+  "language": {
+    "label": "Langue"
+  },
+  "common": {
+    "cancel": "Annuler",
+    "confirm": "Confirmer",
+    "close": "Fermer",
+    "empty": "—",
+    "noResults": "Aucun résultat",
+    "affectedSenders": "Expéditeurs concernés",
+    "andNMore": "…et {count} de plus",
+    "emailCount": {
+      "one": "{count} mail",
+      "other": "{count} mails"
+    },
+    "senderCount": {
+      "one": "{count} expéditeur",
+      "other": "{count} expéditeurs"
+    },
+    "errorCount": {
+      "one": "{count} erreur",
+      "other": "{count} erreurs"
+    },
+    "resultCount": {
+      "one": "{count} résultat",
+      "other": "{count} résultats"
+    },
+    "deletedEmailCount": {
+      "one": "{count} mail supprimé",
+      "other": "{count} mails supprimés"
+    }
+  },
+  "table": {
+    "selectAll": "Tout sélectionner",
+    "nextPage": "Page suivante",
+    "previousPage": "Page précédente",
+    "pageLabel": "Page {page}",
+    "preferences": "Préférences du tableau",
+    "wrapLines": "Retour à la ligne",
+    "wrapLinesDescriptionText": "Afficher les textes longs sur plusieurs lignes.",
+    "wrapLinesDescriptionSubject": "Afficher les sujets longs en entier.",
+    "stripedRows": "Lignes alternées",
+    "stripedRowsDescription": "Alterner la couleur de fond des lignes.",
+    "columns": "Colonnes",
+    "rowsPerPage": "{count} lignes",
+    "sendersPerPage": "Expéditeurs par page",
+    "emailsPerPage": "Mails par page"
+  },
+  "nav": {
+    "header": "Navigation",
+    "dashboard": "Tableau de bord",
+    "senders": "Expéditeurs",
+    "unsubscribe": "Désabonnement"
+  },
+  "topNav": {
+    "title": "Gmail Filtering",
+    "sync": "Synchroniser",
+    "syncing": "Synchronisation…",
+    "syncAriaLabel": "Resynchroniser les mails depuis Gmail",
+    "lightMode": "Mode clair",
+    "darkMode": "Mode sombre",
+    "switchToLight": "Passer en mode clair",
+    "switchToDark": "Passer en mode sombre"
+  },
+  "dashboard": {
+    "title": "Tableau de bord",
+    "descriptionWithAccount": "Analyse des mails reçus sur {account}",
+    "description": "Analyse des mails reçus",
+    "viewAllSenders": "Voir tous les expéditeurs",
+    "totalEmails": "Mails reçus",
+    "totalEmailsHint": "Mails que vous avez reçus (les vôtres sont exclus)",
+    "uniqueSenders": "Expéditeurs uniques",
+    "uniqueSendersHint": "Adresses distinctes trouvées dans la boîte",
+    "topSender": "Plus gros expéditeur",
+    "topSenderHint": "{email} — {emails} ({share} de la boîte)",
+    "noData": "Aucune donnée"
+  },
+  "chart": {
+    "title": "Top expéditeurs",
+    "description": "Les expéditeurs qui remplissent le plus votre boîte",
+    "topN": "Top {count}",
+    "senderCountLabel": "Nombre d'expéditeurs affichés",
+    "series": "Mails reçus",
+    "xTitle": "Expéditeur",
+    "yTitle": "Nombre de mails",
+    "ariaLabel": "Expéditeurs classés par nombre de mails",
+    "viewEmails": "Voir les mails",
+    "empty": "Aucune donnée à afficher"
+  },
+  "senders": {
+    "title": "Expéditeurs",
+    "pageDescription": "Recherchez, triez et nettoyez vos expéditeurs en masse",
+    "tableDescription": "Sélectionnez des expéditeurs pour un nettoyage en masse, ou cliquez sur un nom pour ouvrir ses mails.",
+    "columns": {
+      "rank": "#",
+      "name": "Nom",
+      "email": "Email",
+      "count": "Mails",
+      "lastEmail": "Dernier mail",
+      "share": "Part de la boîte"
+    },
+    "loading": "Chargement des expéditeurs...",
+    "selectionGroupLabel": "Sélection des expéditeurs",
+    "tableLabel": "Expéditeurs",
+    "searchPlaceholder": "Rechercher un nom ou une adresse...",
+    "searchAriaLabel": "Rechercher un expéditeur",
+    "viewEmails": "Voir les mails",
+    "deleteEmails": "Supprimer les mails",
+    "deleteNEmails": "Supprimer {emails}",
+    "emptyTitle": "Aucun expéditeur",
+    "emptyDescription": "Lancez une synchronisation pour analyser votre boîte Gmail.",
+    "noMatchTitle": "Aucun résultat",
+    "noMatchDescription": "Essayez un autre terme de recherche.",
+    "confirmDeleteTitle": "Supprimer les mails des expéditeurs sélectionnés",
+    "confirmDeleteWarning": {
+      "one": "{count} mail de {senders} sera déplacé vers la corbeille Gmail. L'action reste réversible depuis Gmail pendant 30 jours.",
+      "other": "{count} mails de {senders} seront déplacés vers la corbeille Gmail. L'action reste réversible depuis Gmail pendant 30 jours."
+    }
+  },
+  "unsubscribe": {
+    "title": "Désabonnement",
+    "pageDescriptionEmpty": "Détecte l'en-tête List-Unsubscribe de vos expéditeurs et se désabonne en un clic quand c'est possible.",
+    "pageDescription": "{newsletters} sur {total} expéditeurs — {none} sans lien de désabonnement, {unknown}.",
+    "newsletterCount": {
+      "one": "{count} newsletter désabonnable détectée",
+      "other": "{count} newsletters désabonnables détectées"
+    },
+    "unknownCount": {
+      "one": "{count} pas encore scanné",
+      "other": "{count} pas encore scannés"
+    },
+    "rescanAll": "Tout rescanner",
+    "allScanned": "Tout est scanné",
+    "scanNew": "Scanner {senders}",
+    "newSenderCount": {
+      "one": "{count} nouvel expéditeur",
+      "other": "{count} nouveaux expéditeurs"
+    },
+    "tableTitle": "Newsletters",
+    "tableDescription": "Cliquez sur un nom pour voir ses mails. Le désabonnement automatique ne couvre que les expéditeurs « lien » et « un clic » ; les autres peuvent quand même être supprimés en masse.",
+    "tableLabel": "Newsletters désabonnables",
+    "loading": "Chargement des expéditeurs...",
+    "loadFailed": "Échec du chargement",
+    "columns": {
+      "name": "Nom",
+      "email": "Email",
+      "count": "Mails",
+      "lastEmail": "Dernier mail",
+      "status": "Désabonnement",
+      "lastRun": "Demande",
+      "manualAction": "Action manuelle"
+    },
+    "status": {
+      "one_click": "Un clic",
+      "link": "Lien à ouvrir",
+      "mailto": "Manuel (mail)",
+      "none": "Aucun",
+      "unknown": "Non scanné"
+    },
+    "lastRunSent": "Envoyée {relative}",
+    "lastRunFailed": "Échouée {relative}",
+    "openMail": "Ouvrir le mail",
+    "openPage": "Ouvrir la page",
+    "emptyTitle": "Aucune newsletter désabonnable détectée",
+    "emptyScanHint": "Lancez un scan pour sonder vos expéditeurs.",
+    "emptyNoLinkHint": "Aucun de vos expéditeurs scannés n'expose de lien de désabonnement.",
+    "viewEmails": "Voir les mails",
+    "deleteEmails": "Supprimer les mails",
+    "deleteNEmails": "Supprimer {emails}",
+    "unsubscribeAction": "Se désabonner",
+    "unsubscribeActionCount": "Se désabonner ({count})",
+    "confirmRunTitle": "Confirmer le désabonnement",
+    "confirmRunAndDelete": "Se désabonner et supprimer ({count})",
+    "confirmRunWarning": "Une demande de désabonnement sera envoyée directement à {senders}. Pour les liens simples (pas « one-click »), certains expéditeurs peuvent exiger une confirmation supplémentaire sur leur propre page — une réponse HTTP OK ne garantit donc pas que la demande a bien été traitée en bout de chaîne.",
+    "manualSelectionNote": {
+      "one": "{count} expéditeur sélectionné ne propose qu'un désabonnement par mail — utilisez le lien « Ouvrir le mail » dans le tableau, il n'est pas inclus ici.",
+      "other": "{count} expéditeurs sélectionnés ne proposent qu'un désabonnement par mail — utilisez le lien « Ouvrir le mail » dans le tableau, ils ne sont pas inclus ici."
+    },
+    "alsoDeleteAll": "Supprimer aussi tous leurs mails",
+    "confirmDeleteTitle": "Confirmer la suppression",
+    "confirmDeleteWarning": {
+      "one": "{count} mail de {senders} sera déplacé vers la corbeille Gmail — sans tentative de désabonnement. L'action reste réversible depuis Gmail pendant 30 jours.",
+      "other": "{count} mails de {senders} seront déplacés vers la corbeille Gmail — sans tentative de désabonnement. L'action reste réversible depuis Gmail pendant 30 jours."
+    },
+    "searchPlaceholder": "Rechercher un nom ou une adresse...",
+    "searchAriaLabel": "Rechercher un expéditeur"
+  },
+  "emailsPanel": {
+    "title": "Mails reçus",
+    "loading": "Chargement des mails...",
+    "tableLabel": "Mails de l'expéditeur",
+    "selectionGroupLabel": "Sélection des mails",
+    "columns": {
+      "subject": "Objet",
+      "date": "Date"
+    },
+    "noSubject": "(sans objet)",
+    "emptyList": "Il ne reste aucun mail de cet expéditeur.",
+    "noMatch": "Aucun mail ne correspond à ce filtre.",
+    "filterPlaceholder": "Filtrer par objet...",
+    "filterAriaLabel": "Filtrer les mails",
+    "preferences": "Préférences",
+    "openUnsubscribeMail": "Ouvrir le mail de désabonnement",
+    "unsubscribeAction": "Se désabonner",
+    "deleteSelection": "Supprimer la sélection ({count})",
+    "deleteAll": "Tout supprimer ({count})",
+    "confirmTrashTitle": "Confirmer la mise à la corbeille",
+    "confirmTrashBody": {
+      "one": "{count} mail de {sender} sera déplacé vers la corbeille Gmail. L'action reste réversible depuis Gmail pendant 30 jours.",
+      "other": "{count} mails de {sender} seront déplacés vers la corbeille Gmail. L'action reste réversible depuis Gmail pendant 30 jours."
+    },
+    "alsoUnsubscribe": "Se désabonner aussi de cet expéditeur",
+    "confirmSelection": "Supprimer {emails}",
+    "confirmAll": "Supprimer les {emails}",
+    "confirmSingle": "Supprimer ce mail"
+  },
+  "preview": {
+    "title": "Aperçu du mail",
+    "subtitle": "Aperçu",
+    "noSelectionTitle": "Aucun mail sélectionné",
+    "noSelectionDescription": "Cliquez sur le sujet d'un mail pour l'afficher ici.",
+    "loading": "Chargement du mail...",
+    "errorHeader": "Impossible d'afficher ce mail",
+    "from": "De",
+    "to": "À",
+    "receivedAt": "Reçu le",
+    "labels": "Libellés",
+    "remoteImagesBlocked": "Les images distantes sont bloquées (elles permettent à l'expéditeur de savoir quand le mail est ouvert).",
+    "showImages": "Afficher les images",
+    "copySubject": "Copier le sujet",
+    "copyError": "Échec de la copie",
+    "copySuccess": "Sujet copié",
+    "openInGmail": "Ouvrir dans Gmail",
+    "delete": "Supprimer",
+    "emptyBody": "(Message vide)",
+    "iframeTitle": "Contenu du mail"
+  },
+  "toast": {
+    "backendUnreachable": "Impossible de joindre le backend",
+    "backendUnreachableContent": "{message} — vérifiez que l'API tourne sur le port 8000.",
+    "syncHeader": "Synchronisation avec Gmail",
+    "syncStarting": "Démarrage de la synchronisation...",
+    "syncRunning": "Synchronisation en cours...",
+    "syncDone": "Synchronisation terminée",
+    "syncFailed": "Échec de la synchronisation",
+    "syncFailedFallback": "Une erreur est survenue pendant la synchronisation.",
+    "deleting": "Suppression",
+    "deletingSenders": "Suppression des mails de {senders}...",
+    "deletingCount": "Suppression de {emails} de {senders}...",
+    "deleteDone": "Suppression terminée",
+    "deleteDoneSenders": {
+      "one": "{count} mail de {senders} déplacé vers la corbeille{errors}.",
+      "other": "{count} mails de {senders} déplacés vers la corbeille{errors}."
+    },
+    "deleteFailed": "Échec de la suppression",
+    "deleteErrorsSuffix": " — {errors}",
+    "deleteAllHeader": "Suppression de tous les mails",
+    "deleteSomeHeader": "Suppression de {emails}",
+    "deleteSenderContent": "{sender}...",
+    "deleteSenderContentUnsub": "{sender} — désabonnement puis suppression...",
+    "deleteSenderDone": {
+      "one": "{count} mail de {sender} déplacé vers la corbeille{errors}.{unsubNote}",
+      "other": "{count} mails de {sender} déplacés vers la corbeille{errors}.{unsubNote}"
+    },
+    "unsubscribing": "Désabonnement",
+    "unsubscribeSent": "Demande de désabonnement envoyée",
+    "unsubscribeFailedHeader": "Échec du désabonnement",
+    "unsubscribeFailedContent": "{sender} : {reason}.",
+    "unsubscribeError": "Échec du désabonnement",
+    "unknownReason": "raison inconnue",
+    "unsubNoteOk": " Désabonnement réussi.",
+    "unsubNoteFailed": " Échec du désabonnement ({reason}).",
+    "unsubNoteError": " Désabonnement impossible ({message}).",
+    "unsubRunning": "Envoi de {requests}{deleteNote}...",
+    "unsubRequestCount": {
+      "one": "{count} demande de désabonnement",
+      "other": "{count} demandes de désabonnement"
+    },
+    "unsubRunningDeleteNote": " puis suppression des mails",
+    "unsubDone": "Désabonnement terminé",
+    "unsubSentCount": {
+      "one": "{count} demande de désabonnement envoyée",
+      "other": "{count} demandes de désabonnement envoyées"
+    },
+    "unsubFailCount": {
+      "one": "{count} échec",
+      "other": "{count} échecs"
+    },
+    "unsubDoneContent": "{sent}{failures}.{deleteNote}",
+    "unsubDeleteNote": " {emails}.",
+    "unsubDeleteFailedNote": " Échec de la suppression des mails ({message}).",
+    "scanHeader": "Scan de désabonnement",
+    "scanRunning": "Sondage de {senders}...",
+    "scanDone": "Scan terminé",
+    "scanDoneContent": {
+      "one": "{count} expéditeur scanné.",
+      "other": "{count} expéditeurs scannés."
+    },
+    "scanFailed": "Échec du scan",
+    "allScanned": "Tous les expéditeurs sont déjà scannés."
+  },
+  "apiError": {
+    "http": "Erreur {status}",
+    "token_missing": "token.json introuvable. Exécutez d'abord main.py.",
+    "token_invalid": "Jeton Gmail invalide. Exécutez à nouveau main.py pour vous réauthentifier.",
+    "sync_already_running": "Une synchronisation est déjà en cours.",
+    "email_not_found": "Mail introuvable : {id}"
+  },
+  "syncStatus": {
+    "starting": "Démarrage de la synchronisation...",
+    "authenticating": "Authentification auprès de Gmail...",
+    "listing": "Récupération de la liste des messages...",
+    "found": "{total} messages trouvés. Extraction des métadonnées...",
+    "extracting": "Extraction des métadonnées… {current}/{total}",
+    "done": "{saved} mails synchronisés ({fetched} récupérés / {total} au total).",
+    "process_died": "Le processus de synchronisation s'est arrêté de façon inattendue."
+  },
+  "unsubDetail": {
+    "not_scanned": "Pas encore scanné",
+    "manual_action_required": "Nécessite une action manuelle",
+    "no_unsubscribe_link": "Aucun lien de désabonnement",
+    "http_status": "HTTP {status}"
+  }
+}

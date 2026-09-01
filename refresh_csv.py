@@ -1,11 +1,12 @@
 """
-Script indépendant pour mettre à jour le fichier emails.csv
-à partir de l'API Gmail.
+Standalone script to update the emails.csv file
+from the Gmail API.
 
-Usage :
+Usage:
     python refresh_csv.py
 """
 
+import json
 import os
 import re
 import time
@@ -21,7 +22,35 @@ SCOPES = ['https://www.googleapis.com/auth/gmail.modify']
 CSV_PATH = 'emails.csv'
 TOKEN_PATH = 'token.json'
 SECRETS_PATH = 'secrets.json'
+STATUS_PATH = 'sync_status.json'
 LOG_DIR = 'logs'
+
+
+def _write_status(message_key=None, message_params=None, **kwargs):
+    """
+    Updates sync_status.json, polled by the backend to
+    forward progress to the frontend.
+
+    A message travels as three fields so the dashboard can display it in the
+    user's language: `message_key` identifies it in the frontend catalog,
+    `message_params` fills its placeholders, and `message` is the English text
+    shown as-is when no key is known (a raw exception, for instance). They are
+    always written together — a stale key left over from a previous step would
+    describe the wrong thing.
+    """
+    data = {"status": "running", "current": 0, "total": 0, "message": ""}
+    if os.path.exists(STATUS_PATH):
+        try:
+            with open(STATUS_PATH) as f:
+                data.update(json.load(f))
+        except (json.JSONDecodeError, OSError):
+            pass
+    data.update(kwargs)
+    if "message" in kwargs:
+        data["message_key"] = message_key
+        data["message_params"] = message_params
+    with open(STATUS_PATH, 'w') as f:
+        json.dump(data, f)
 
 # ---------- Logger ----------
 os.makedirs(LOG_DIR, exist_ok=True)
@@ -35,23 +64,23 @@ logger.add(
 
 
 def _get_credentials():
-    """Récupère ou renouvelle les credentials Gmail."""
+    """Retrieves or renews the Gmail credentials."""
     creds = None
     if os.path.exists(TOKEN_PATH):
         creds = Credentials.from_authorized_user_file(TOKEN_PATH, SCOPES)
-        logger.debug("Token chargé depuis token.json")
+        logger.debug("Token loaded from token.json")
 
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
-            logger.info("Token expiré, rafraîchissement...")
+            logger.info("Token expired, refreshing...")
             creds.refresh(Request())
         else:
-            logger.info("Aucun token valide, lancement de l'authentification OAuth...")
+            logger.info("No valid token, launching OAuth authentication...")
             flow = InstalledAppFlow.from_client_secrets_file(SECRETS_PATH, SCOPES)
             creds = flow.run_local_server(port=0)
         with open(TOKEN_PATH, 'w') as f:
             f.write(creds.to_json())
-        logger.success("Token sauvegardé")
+        logger.success("Token saved")
 
     return creds
 
@@ -71,15 +100,23 @@ def _extract_name(from_header: str) -> str:
 
 
 def refresh_csv():
-    logger.info("=== Début du refresh CSV ===")
+    logger.info("=== Starting CSV refresh ===")
+    _write_status(
+        status="running",
+        current=0,
+        total=0,
+        message_key="authenticating",
+        message="Authenticating with Gmail...",
+    )
 
-    logger.info("Authentification Gmail...")
+    logger.info("Gmail authentication...")
     creds = _get_credentials()
     service = build('gmail', 'v1', credentials=creds)
-    logger.success("Service Gmail initialisé")
+    logger.success("Gmail service initialized")
 
-    # 1. Récupérer tous les IDs
-    logger.info("Récupération de la liste des messages...")
+    # 1. Retrieve all IDs
+    logger.info("Fetching the message list...")
+    _write_status(message_key="listing", message="Fetching the message list...")
     message_ids = []
     page_token = None
     while True:
@@ -95,9 +132,15 @@ def refresh_csv():
             break
 
     total = len(message_ids)
-    logger.info(f"{total} messages trouvés. Extraction des métadonnées...")
+    logger.info(f"{total} messages found. Extracting metadata...")
+    _write_status(
+        total=total,
+        message_key="found",
+        message_params={"total": total},
+        message=f"{total} messages found. Extracting metadata...",
+    )
 
-    # 2. Fetch par batch avec retries
+    # 2. Fetch by batch with retries
     rows = []
     failed_ids = []
     batch_size = 50
@@ -153,14 +196,21 @@ def refresh_csv():
         fails = _process_batch(batch_ids)
         failed_ids.extend(fails)
         progress = min(i + batch_size, total)
-        print(f"  Progression : {progress}/{total} ({len(failed_ids)} erreurs)", end='\r')
+        print(f"  Progress: {progress}/{total} ({len(failed_ids)} errors)", end='\r')
+        _write_status(
+            current=progress,
+            total=total,
+            message_key="extracting",
+            message_params={"current": progress, "total": total},
+            message=f"Extracting metadata… {progress}/{total}",
+        )
         time.sleep(0.1)
 
     # Retries
     for attempt in range(1, 4):
         if not failed_ids:
             break
-        logger.warning(f"Retry {attempt}/3 — {len(failed_ids)} messages échoués")
+        logger.warning(f"Retry {attempt}/3 — {len(failed_ids)} failed messages")
         time.sleep(2 ** attempt)
         retry_ids = failed_ids[:]
         failed_ids = []
@@ -171,19 +221,33 @@ def refresh_csv():
             time.sleep(0.2)
 
     if failed_ids:
-        logger.warning(f"{len(failed_ids)} messages non récupérés après 3 retries")
+        logger.warning(f"{len(failed_ids)} messages not retrieved after 3 retries")
 
-    # 3. Sauvegarder
+    # 3. Save
     df = pl.DataFrame(rows)
     df.write_csv(CSV_PATH)
 
-    logger.success(f"CSV mis à jour : {df.shape[0]} lignes sauvegardées dans '{CSV_PATH}'")
-    logger.info(f"Résumé : {total - len(failed_ids)} récupérés / {total} total")
-    logger.info("=== Fin du refresh CSV ===")
+    logger.success(f"CSV updated: {df.shape[0]} rows saved to '{CSV_PATH}'")
+    logger.info(f"Summary: {total - len(failed_ids)} retrieved / {total} total")
+    logger.info("=== CSV refresh finished ===")
 
-    print(f"\n✅ CSV mis à jour : {df.shape[0]} lignes sauvegardées dans '{CSV_PATH}'")
-    print(f"   ({total - len(failed_ids)} récupérés / {total} total)")
+    print(f"\n✅ CSV updated: {df.shape[0]} rows saved to '{CSV_PATH}'")
+    print(f"   ({total - len(failed_ids)} retrieved / {total} total)")
+
+    _write_status(
+        status="done",
+        current=total,
+        total=total,
+        message_key="done",
+        message_params={"saved": df.shape[0], "fetched": total - len(failed_ids), "total": total},
+        message=f"{df.shape[0]} emails synced ({total - len(failed_ids)} retrieved / {total} total).",
+    )
 
 
 if __name__ == '__main__':
-    refresh_csv()
+    try:
+        refresh_csv()
+    except Exception as e:
+        logger.exception("Error during refresh")
+        _write_status(status="error", message=str(e))
+        raise

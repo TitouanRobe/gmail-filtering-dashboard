@@ -1,16 +1,50 @@
-# React + Vite
+# Frontend — Gmail Filtering Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[![React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=black)](https://react.dev)
+[![Vite](https://img.shields.io/badge/Vite-8-646CFF?style=flat-square&logo=vite&logoColor=white)](https://vite.dev)
+[![Cloudscape](https://img.shields.io/badge/Cloudscape-232F3E?style=flat-square)](https://cloudscape.design/)
+[![i18n](https://img.shields.io/badge/i18n-EN%20%7C%20FR-4C9A2A?style=flat-square&logo=googletranslate&logoColor=white)](#text-and-translations)
 
-Currently, two official plugins are available:
+The React single-page app of the [Gmail Filtering Dashboard](../README.md).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```bash
+npm install
+npm run dev      # dev server on http://localhost:5173
+npm run build    # production build into dist/
+npm run lint     # ESLint
+npm run preview  # serve the production build
+```
 
-## React Compiler
+The backend is expected on `http://localhost:8000/api`. Override it with a `.env` file:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```env
+VITE_API_BASE=http://localhost:8000/api
+```
 
-## Expanding the ESLint configuration
+## Layout
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```
+src/
+├── api.js            # API client — every call goes through it
+├── components/       # SendersTable, EmailsPanel, EmailPreview, SenderChart, ...
+├── context/          # AppDataContext (shared Gmail data), ToastContext
+├── i18n/             # Message catalogs (en/fr), language provider, formatters
+├── layouts/          # RootLayout: top bar, side navigation, modal
+└── pages/            # DashboardPage, SendersPage, UnsubscribePage
+```
+
+## Text and translations
+
+No user-facing string is written in a component. Everything goes through the catalogs in
+`src/i18n/locales/` and the `t()` function of the `useI18n()` hook:
+
+```jsx
+const { t, formatNumber, formatDate, formatRelative, formatPercent } = useI18n();
+
+t("senders.title");
+t("common.emailCount", { count: 1250 });
+```
+
+`en.json` is the source of truth: add a key there first, then to `fr.json`. See the
+*Internationalization* section of the [root README](../README.md) for plurals, backend messages and
+how to add a language.

@@ -6,76 +6,76 @@ from datetime import datetime
 
 import polars as pl
 
-# Bibliothèques Google
+# Google libraries
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 
-# Définition des permissions (Scope) : accès en lecture seule au profil et messages
+# Permission definition (Scope): read-only access to profile and messages
 SCOPES = ['https://www.googleapis.com/auth/gmail.modify']
 
 
 def main():
     creds = None
 
-    # 1. Gestion du jeton d'accès (Token)
-    # Le fichier token.json stocke les privilèges une fois la première connexion faite.
+    # 1. Access token handling
+    # The token.json file stores the credentials once the first login is done.
     if os.path.exists('token.json'):
         creds = Credentials.from_authorized_user_file('token.json', SCOPES)
 
-    # 2. Si aucun jeton valide n'existe, on lance la connexion
+    # 2. If no valid token exists, launch the login flow
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
         else:
-            # Utilisation de ton fichier secrets.json
+            # Using your secrets.json file
             flow = InstalledAppFlow.from_client_secrets_file(
                 'secrets.json', SCOPES)
             creds = flow.run_local_server(port=0)
 
-        # Sauvegarde du jeton pour la prochaine exécution
+        # Save the token for the next run
         with open('token.json', 'w') as token:
             token.write(creds.to_json())
 
     try:
-        # 3. Création du service Gmail
+        # 3. Create the Gmail service
         service = build('gmail', 'v1', credentials=creds)
 
-        # 4. Appel de la méthode getProfile (userId='me' désigne l'utilisateur connecté)
+        # 4. Call getProfile (userId='me' refers to the connected user)
         profile = service.users().getProfile(userId='me').execute()
 
-        print("\n--- Informations du compte Gmail ---")
-        print(f"Adresse Email : {profile.get('emailAddress')}")
-        print(f"Nombre de messages : {profile.get('messagesTotal')}")
-        print(f"Nombre de fils (threads) : {profile.get('threadsTotal')}")
-        print(f" Profile : {profile}")
+        print("\n--- Gmail account info ---")
+        print(f"Email address: {profile.get('emailAddress')}")
+        print(f"Number of messages: {profile.get('messagesTotal')}")
+        print(f"Number of threads: {profile.get('threadsTotal')}")
+        print(f" Profile: {profile}")
         print("------------------------------------\n")
 
-        # 5. Compter les mails de l'expéditeur "Linkedin"
+        # 5. Count emails from the "Linkedin" sender
         count_emails_from_sender(service, "Pinterest")
 
-        # 6. DataFrame Polars de tous les mails (cache CSV)
+        # 6. Polars DataFrame of all emails (CSV cache)
         df = fetch_all_emails_df(service, csv_path='emails.csv')
 
-        # 7. Classement des expéditeurs depuis le CSV
+        # 7. Sender ranking from the CSV
         top_senders_from_csv('emails.csv', top_n=10)
 
-        # 8. Compter les mails d'un expéditeur spécifique
+        # 8. Count emails from a specific sender
         count_emails_by_address('no-reply@cds.newsletter-cdiscount.com', 'emails.csv')
 
 
     except Exception as error:
-        print(f"Une erreur est survenue lors de l'appel à l'API : {error}")
+        print(f"An error occurred while calling the API: {error}")
 
 
 def count_emails_from_sender(service, sender: str):
     """
-    Compte et affiche le nombre total de mails reçus d'un expéditeur donné.
+    Counts and prints the total number of emails received from a given sender.
 
     Args:
-        service: Le service Gmail authentifié.
-        sender:  Le nom ou l'adresse de l'expéditeur à rechercher.
+        service: The authenticated Gmail service.
+        sender:  The name or address of the sender to search for.
     """
     try:
         query = f"from:{sender}"
@@ -97,17 +97,17 @@ def count_emails_from_sender(service, sender: str):
             if not page_token:
                 break
 
-        print(f"\n--- Mails de '{sender}' ---")
-        print(f"Nombre de mails reçus de '{sender}' : {total}")
+        print(f"\n--- Emails from '{sender}' ---")
+        print(f"Number of emails received from '{sender}': {total}")
         print("----------------------------\n")
 
     except Exception as error:
-        print(f"Erreur lors du comptage des mails de '{sender}' : {error}")
+        print(f"Error while counting emails from '{sender}': {error}")
 
 
 def _extract_name(from_header: str) -> str:
     """
-    Extrait le nom d'affichage du header 'From'.
+    Extracts the display name from the 'From' header.
     Ex: '"John Doe" <john@example.com>' → 'John Doe'
     """
     match = re.match(r'^"?([^"<]+?)"?\s*<', from_header)
@@ -118,28 +118,28 @@ def _extract_name(from_header: str) -> str:
 
 def fetch_all_emails_df(service, csv_path: str = None) -> pl.DataFrame:
     """
-    Récupère les métadonnées de tous les mails et retourne un DataFrame Polars.
-    Si csv_path est fourni et que le fichier existe, charge le CSV directement.
-    Sinon, récupère les données via l'API et sauvegarde le CSV.
+    Fetches the metadata of all emails and returns a Polars DataFrame.
+    If csv_path is provided and the file exists, loads the CSV directly.
+    Otherwise, fetches the data via the API and saves the CSV.
 
-    Colonnes : id, from_email, from_name, subject, date
+    Columns: id, from_email, from_name, subject, date
 
     Args:
-        service:  Le service Gmail authentifié.
-        csv_path: Chemin du fichier CSV pour le cache (optionnel).
+        service:  The authenticated Gmail service.
+        csv_path: Path to the CSV file for caching (optional).
 
     Returns:
-        pl.DataFrame contenant les métadonnées de tous les mails.
+        pl.DataFrame containing the metadata of all emails.
     """
-    # Charger depuis le cache CSV si disponible
+    # Load from the CSV cache if available
     if csv_path and os.path.exists(csv_path):
         df = pl.read_csv(csv_path)
-        print(f"\n📂 DataFrame chargé depuis '{csv_path}' : {df.shape[0]} lignes × {df.shape[1]} colonnes\n")
+        print(f"\n📂 DataFrame loaded from '{csv_path}': {df.shape[0]} rows × {df.shape[1]} columns\n")
         return df
 
-    print("\n⏳ Construction du DataFrame — récupération des messages...")
+    print("\n⏳ Building the DataFrame — fetching messages...")
 
-    # 1. Récupérer tous les IDs de messages
+    # 1. Retrieve all message IDs
     message_ids = []
     page_token = None
     while True:
@@ -155,15 +155,15 @@ def fetch_all_emails_df(service, csv_path: str = None) -> pl.DataFrame:
             break
 
     total_messages = len(message_ids)
-    print(f"📬 {total_messages} messages trouvés. Extraction des métadonnées...")
+    print(f"📬 {total_messages} messages found. Extracting metadata...")
 
-    # 2. Récupérer les headers par batch (avec retries)
+    # 2. Fetch headers by batch (with retries)
     rows = []
     failed_ids = []
     batch_size = 50
 
     def _process_batch(ids_to_fetch):
-        """Envoie un batch et retourne les IDs qui ont échoué."""
+        """Sends a batch and returns the IDs that failed."""
         local_failed = []
 
         def callback(request_id, response, exception):
@@ -209,22 +209,22 @@ def fetch_all_emails_df(service, csv_path: str = None) -> pl.DataFrame:
         batch.execute()
         return local_failed
 
-    # Premier passage
+    # First pass
     for i in range(0, total_messages, batch_size):
         batch_ids = message_ids[i:i + batch_size]
         fails = _process_batch(batch_ids)
         failed_ids.extend(fails)
 
         progress = min(i + batch_size, total_messages)
-        print(f"  Progression : {progress}/{total_messages} ({len(failed_ids)} erreurs)", end='\r')
-        time.sleep(0.1)  # Pause pour éviter le rate limiting
+        print(f"  Progress: {progress}/{total_messages} ({len(failed_ids)} errors)", end='\r')
+        time.sleep(0.1)  # Pause to avoid rate limiting
 
-    # Retries pour les messages échoués (max 3 tentatives)
+    # Retries for failed messages (max 3 attempts)
     for attempt in range(1, 4):
         if not failed_ids:
             break
-        print(f"\n  🔄 Retry {attempt}/3 — {len(failed_ids)} messages à récupérer...")
-        time.sleep(2 ** attempt)  # Backoff exponentiel : 2s, 4s, 8s
+        print(f"\n  🔄 Retry {attempt}/3 — {len(failed_ids)} messages to retrieve...")
+        time.sleep(2 ** attempt)  # Exponential backoff: 2s, 4s, 8s
         retry_ids = failed_ids[:]
         failed_ids = []
         for i in range(0, len(retry_ids), batch_size):
@@ -234,23 +234,23 @@ def fetch_all_emails_df(service, csv_path: str = None) -> pl.DataFrame:
             time.sleep(0.2)
 
     if failed_ids:
-        print(f"\n  ⚠️  {len(failed_ids)} messages n'ont pas pu être récupérés.")
+        print(f"\n  ⚠️  {len(failed_ids)} messages could not be retrieved.")
 
-    # 3. Construire le DataFrame Polars
+    # 3. Build the Polars DataFrame
     df = pl.DataFrame(rows)
 
-    # 4. Sauvegarder en CSV si un chemin est fourni
+    # 4. Save to CSV if a path is provided
     if csv_path:
         df.write_csv(csv_path)
-        print(f"\n💾 CSV sauvegardé dans '{csv_path}'")
+        print(f"\n💾 CSV saved to '{csv_path}'")
 
-    print(f"✅ DataFrame créé : {df.shape[0]} lignes × {df.shape[1]} colonnes\n")
+    print(f"✅ DataFrame created: {df.shape[0]} rows × {df.shape[1]} columns\n")
     return df
 
 
 def _extract_email(from_header: str) -> str:
     """
-    Extrait l'adresse email du header 'From'.
+    Extracts the email address from the 'From' header.
     Ex: '"John Doe" <john@example.com>' → 'john@example.com'
     """
     match = re.search(r'<(.+?)>', from_header)
@@ -260,15 +260,15 @@ def _extract_email(from_header: str) -> str:
 
 def top_senders_from_csv(csv_path: str = 'emails.csv', top_n: int = 10) -> pl.DataFrame:
     """
-    Charge le CSV des mails et retourne le classement des expéditeurs
-    les plus fréquents via un group_by sur from_email.
+    Loads the emails CSV and returns the ranking of the most frequent
+    senders via a group_by on from_email.
 
     Args:
-        csv_path: Chemin du fichier CSV.
-        top_n:    Nombre d'expéditeurs à afficher.
+        csv_path: Path to the CSV file.
+        top_n:    Number of senders to display.
 
     Returns:
-        pl.DataFrame avec les colonnes from_email et count, trié par count desc.
+        pl.DataFrame with the from_email and count columns, sorted by count desc.
     """
     df = pl.read_csv(csv_path)
 
@@ -279,11 +279,11 @@ def top_senders_from_csv(csv_path: str = 'emails.csv', top_n: int = 10) -> pl.Da
     )
 
     top = ranking.head(top_n)
-    max_count = top.row(0)[1]  # count du 1er expéditeur
-    bar_max = 30  # longueur max de la barre
+    max_count = top.row(0)[1]  # count of the top sender
+    bar_max = 30  # max bar length
 
     print(f"\n{'='*65}")
-    print(f"  🏆 Top {top_n} des expéditeurs — {df.shape[0]} mails / {ranking.shape[0]} expéditeurs uniques")
+    print(f"  🏆 Top {top_n} senders — {df.shape[0]} emails / {ranking.shape[0]} unique senders")
     print(f"{'='*65}")
     for rank, row in enumerate(top.iter_rows(named=True), 1):
         bar_len = int((row['count'] / max_count) * bar_max)
@@ -296,19 +296,19 @@ def top_senders_from_csv(csv_path: str = 'emails.csv', top_n: int = 10) -> pl.Da
 
 def count_emails_by_address(email: str, csv_path: str = 'emails.csv') -> int:
     """
-    Retourne le nombre de mails envoyés par un émetteur donné.
+    Returns the number of emails sent by a given sender.
 
     Args:
-        email:    Adresse email de l'émetteur à rechercher.
-        csv_path: Chemin du fichier CSV.
+        email:    Email address of the sender to search for.
+        csv_path: Path to the CSV file.
 
     Returns:
-        Nombre de mails envoyés par cet émetteur.
+        Number of emails sent by that sender.
     """
     df = pl.read_csv(csv_path)
     count = df.filter(pl.col('from_email') == email.lower()).shape[0]
 
-    print(f"\n📧 {email} → {count} mails")
+    print(f"\n📧 {email} → {count} emails")
     return count
 
 
